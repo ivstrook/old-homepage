@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>フェゼレントのホームページ</title>
+    <!-- OGP (Open Graph Protocol) 設定 -->
+    <meta property="og:title" content="フェゼレントのホームページ">
+    <meta property="og:description" content="フェゼレントのウェブサイト。">
+    <meta property="og:image" content="https://media.ffnet.work/seo.png">
+    <meta property="og:url" content="https://ivstrook.tech">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="フェゼレントのサイト">
+
+    <!-- Twitter Card 設定 -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@SmileShiba_Love">
+    <meta name="twitter:creator" content="@SmileShiba_Love">
+    <meta name="twitter:title" content="フェゼレントのホームページ">
+    <meta name="twitter:description" content="フェゼレントウェブサイト。">
+    <meta name="twitter:image" content="https://media.ffnet.work/seo.png">
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- 外部CSSファイルをリンク -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="antialiased">
+    <div class="min-h-screen flex flex-col">
+        <!-- ヘッダー -->
+        <header class="bg-gray-900 shadow-lg py-4 px-6 md:px-8 lg:px-12 rounded-b-lg">
+            <div class="container mx-auto flex justify-between items-center">
+                <a href="#" onclick="showHomePage(); return false;" class="text-2xl font-bold rounded-md p-2 hover:bg-gray-800 transition-colors duration-200">
+                    <span class="text-amber-400">フェゼレント</span><span class="text-gray-200">のサイト</span>
+                </a>
+                <nav class="hidden md:flex space-x-6">
+                    <a href="#home" onclick="showHomePage(); return false;" class="text-gray-300 hover:text-amber-400 font-medium rounded-md p-2 hover:bg-gray-800 transition-colors duration-200">ホーム</a>
+                    <a href="#about-me" onclick="showPage('pages/about-me.html'); return false;" class="text-gray-300 hover:text-amber-400 font-medium rounded-md p-2 hover:bg-gray-800 transition-colors duration-200">俺について</a>
+                    <a href="#project-list" onclick="showPage('pages/project-list.html'); return false;" class="text-gray-300 hover:text-amber-400 font-medium rounded-md p-2 hover:bg-gray-800 transition-colors duration-200">プロジェクト一覧</a>
+                    <a href="#profile" onclick="showPage('pages/profile.html'); return false;" class="text-gray-300 hover:text-amber-400 font-medium rounded-md p-2 hover:bg-gray-800 transition-colors duration-200">プロフィール</a>
+                    <a href="#contact" onclick="showPage('pages/contact.html'); return false;" class="text-gray-300 hover:text-amber-400 font-medium rounded-md p-2 hover:bg-gray-800 transition-colors duration-200">お問い合わせ</a>
+                </nav>
+                <!-- モバイルナビゲーショントグル -->
+                <button id="mobile-menu-button" class="md:hidden text-gray-300 hover:text-amber-400 focus:outline-none focus:ring-2 focus:ring-gray-600 rounded-md p-2">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+            <!-- モバイルメニュー -->
+            <div id="mobile-menu" class="mobile-menu-hidden md:hidden bg-gray-900 mt-2 py-2 rounded-md shadow-lg">
+                <a href="#home" onclick="showHomePage(); closeMobileMenu(); return false;" class="block px-4 py-2 text-gray-200 hover:bg-gray-800">ホーム</a>
+                <a href="#about-me" onclick="showPage('pages/about-me.html'); closeMobileMenu(); return false;" class="block px-4 py-2 text-gray-200 hover:bg-gray-800">俺について</a>
+                <a href="#project-list" onclick="showPage('pages/project-list.html'); closeMobileMenu(); return false;" class="block px-4 py-2 text-gray-200 hover:bg-gray-800">プロジェクト一覧</a>
+                <a href="#profile" onclick="showPage('pages/profile.html'); closeMobileMenu(); return false;" class="block px-4 py-2 text-gray-200 hover:bg-gray-800">プロフィール</a>
+                <a href="#contact" onclick="showPage('pages/contact.html'); closeMobileMenu(); return false;" class="block px-4 py-2 text-gray-200 hover:bg-gray-800">お問い合わせ</a>
+            </div>
+        </header>
+
+        <!-- メインコンテンツを読み込むコンテナ -->
+        <main id="main-content" class="flex-grow"></main>
+
+        <!-- フッター -->
+        <footer class="bg-gray-900 text-white py-8 px-6 md:px-8 lg:px-12 mt-8 rounded-t-lg shadow-md">
+            <div class="container mx-auto text-center text-gray-400">
+		    <p>&copy; 2025 <span class="text-amber-400">ivstrook</span>.<br> Designed by Gemini. All rights reserved.</p>
+                <div class="flex justify-center space-x-4 mt-4">
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Custom Modal for Mailto Confirmation -->
+    <div id="mailtoModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button" onclick="closeModal()">&times;</span>
+            <h3 class="text-2xl font-bold text-amber-400 mb-4">メール送信の準備</h3>
+            <p class="text-gray-300 mb-6">
+                入力された内容でメールクライアントを起動します。<br>
+                送信前に内容をご確認ください。
+            </p>
+            <button onclick="proceedToMailto()" class="bg-amber-400 text-gray-900 font-bold py-2 px-6 rounded-md hover:bg-amber-500 transition-colors duration-300 shadow-lg mr-4">
+                メール作成画面を開く
+            </button>
+            <button onclick="closeModal()" class="bg-gray-600 text-white font-bold py-2 px-6 rounded-md hover:bg-gray-700 transition-colors duration-300 shadow-lg">
+                キャンセル
+            </button>
+        </div>
+    </div>
+
+    <!-- Custom Message Modal (for errors/info) -->
+    <div id="customMessageModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button" onclick="this.closest('.modal').style.display='none';">&times;</span>
+            <h3 class="text-2xl font-bold mb-4 text-amber-400" id="customMessageTitle">情報</h3>
+            <p class="text-gray-300 mb-6" id="customMessageText"></p>
+            <button onclick="this.closest('.modal').style.display='none';" class="bg-amber-400 text-gray-900 font-bold py-2 px-6 rounded-md hover:bg-amber-500 transition-colors duration-300 shadow-lg">
+                OK
+            </button>
+        </div>
+    </div>
+
+    <!-- 外部JavaScriptファイルをリンク -->
+    <script src="script.js"></script>
+</body>
+</html>
